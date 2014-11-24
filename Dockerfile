@@ -18,7 +18,7 @@ RUN apt-get update && apt-get -y install  unzip \
                         pkg-config \
                         p7zip-full
 
-ENV KERNEL_VERSION  3.16.4
+ENV KERNEL_VERSION  3.16.7
 ENV AUFS_BRANCH     aufs3.16
 
 # Fetch the kernel sources
@@ -167,6 +167,14 @@ RUN cd $ROOTFS && zcat /tcl_rootfs.gz | cpio -f -i -H newc -d --no-absolute-file
 
 # Copy our custom rootfs
 COPY rootfs/rootfs $ROOTFS
+
+# Build the Hyper-V KVP Daemon
+RUN cd /linux-kernel && \
+    make headers_install INSTALL_HDR_PATH=/usr && \
+    cd /linux-kernel/tools/hv && \
+    sed -i 's/\(^CFLAGS = .*\)/\1 -m32/' Makefile && \
+    make hv_kvp_daemon && \
+    cp hv_kvp_daemon $ROOTFS/usr/sbin
 
 # These steps can only be run once, so can't be in make_iso.sh (which can be run in chained Dockerfiles)
 # see https://github.com/boot2docker/boot2docker/blob/master/doc/BUILD.md
