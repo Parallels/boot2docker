@@ -58,7 +58,7 @@ ENV TCZ_DEPS        iptables \
                     git expat2 libiconv libidn libgpg-error libgcrypt libssh2 \
                     nfs-utils tcp_wrappers portmap rpcbind libtirpc \
                     curl ntpclient \
-                    util-linux
+                    util-linux e2fsprogs
 
 # Make the ROOTFS
 RUN mkdir -p $ROOTFS
