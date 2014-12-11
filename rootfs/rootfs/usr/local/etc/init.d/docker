@@ -11,14 +11,6 @@ test -f '/var/lib/boot2docker/profile' && . '/var/lib/boot2docker/profile'
 : ${DOCKER_ULIMITS:=1048576}
 : ${DOCKER_LOGFILE:=/var/lib/boot2docker/docker.log}
 
-: ${CERTDIR:=/var/lib/boot2docker/tls/}
-: ${CACERT:="${CERTDIR}ca.pem"}
-: ${CAKEY:="${CERTDIR}cakey.pem"}
-: ${SERVERCERT:="${CERTDIR}server.pem"}
-: ${SERVERKEY:="${CERTDIR}serverkey.pem"}
-: ${CERT:="${CERTDIR}cert.pem"}
-: ${KEY:="${CERTDIR}key.pem"}
-
 start() {
     mkdir -p "$DOCKER_DIR"
 
