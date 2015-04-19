@@ -19,10 +19,10 @@ RUN apt-get update && apt-get -y install  unzip \
                         p7zip-full
 
 # https://www.kernel.org/
-ENV KERNEL_VERSION  3.18.5
+ENV KERNEL_VERSION  3.18.11
 # http://sourceforge.net/p/aufs/aufs3-standalone/ref/master/branches/
 ENV AUFS_BRANCH     aufs3.18.1+
-ENV AUFS_COMMIT     f9f16b996df1651c5ab19bd6e6101310e3659c76
+ENV AUFS_COMMIT     863c3b76303a1ebea5b6a5b1b014715ac416f913
 # we use AUFS_COMMIT to get stronger repeatability guarantees
 
 # Fetch the kernel sources
@@ -128,7 +128,7 @@ RUN for dep in $TCZ_DEPS; do \
 # Build VBox guest additions
 # For future reference, we have to use x86 versions of several of these bits because TCL doesn't support ELFCLASS64
 # (... and we can't use VBoxControl or VBoxService at all because of this)
-ENV VBOX_VERSION 4.3.20
+ENV VBOX_VERSION 4.3.26
 RUN mkdir -p /vboxguest && \
     cd /vboxguest && \
     \
