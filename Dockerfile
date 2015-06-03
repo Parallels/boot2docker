@@ -211,6 +211,19 @@ RUN mkdir -p /vmtoolsd/${LIBDNET} &&\
     make &&\
     make install && make DESTDIR=$ROOTFS install
 
+# Build Parallels Tools
+ENV PRL_TOOLS_URL = http://download.parallels.com/desktop/v10/10.2.1/ParallelsTools-10.2.1-29006-boot2docker.tar.gz
+
+# Download and prepare Parallels Tools
+RUN mkdir -p /prl_tools && curl -L $PRL_TOOLS_URL | tar -xzC /prl_tools --strip-components 1 &&\
+    cd /prl_tools &&\
+    cp -Rv tools/* $ROOTFS &&\
+    \
+    KERNEL_DIR=/linux-kernel/ KVER=$KERNEL_VERSION SRC=/linux-kernel/ PRL_FREEZE_SKIP=1 \
+    make -C kmods/ -f Makefile.kmods installme &&\
+    \
+    find kmods/ -name \*.ko -exec cp {} $ROOTFS/lib/modules/$KERNEL_VERSION-boot2docker/extra/ \;
+
 # Horrible hack again
 RUN cd $ROOTFS && cd usr/local/lib && ln -s libdnet.1 libdumbnet.so.1 &&\
     cd $ROOTFS && ln -s lib lib64

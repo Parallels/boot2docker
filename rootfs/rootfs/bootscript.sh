@@ -88,3 +88,6 @@ fi
 
 # Launch vmware-tools
 /etc/rc.d/vmtoolsd
+
+# Load Parallels Tools daemon
+/etc/rc.d/prltoolsd
